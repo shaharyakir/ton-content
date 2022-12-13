@@ -35,6 +35,12 @@ Before we can start writing code, we need to install certain developer tools on 
 
 For convenience, our development environment will rely on several clever scripts for testing, compiling and deploying our code. The most convenient language for these scripts is JavaScript, executed by an engine called Nodejs. The installation instructions are [here](https://nodejs.org/). We will need a fairly recent version of node like `v16` or `v17`. You can verify your nodejs version by running `node -v` in terminal.
 
+
+// TODO => WASM
+// TODO => tx-emulator
+// Previously, in the ton ecosystem there was reliancy// on precompiled binaries - func and fift.
+// Here we'll use cross-platform, wasm-based compiler
+// make sure func-js has CLI (if it's THE ONE)
 The next pair of tools, `func` and `fift`, are required for compiling our smart contracts. These are command-line executables that are published as part of the official [TON code base](https://github.com/newton-blockchain/ton/tree/master/crypto/func). Building the two tools from source is a bit cumbersome, so the easiest way is to find somebody who has already built them for you - me! Take a look at my [ton-binaries](https://github.com/ton-defi-org/ton-binaries) repo and use it to download pre-built versions of `func` and `fift` for the operating system that you're using. Don't forget to make the tools executable, place them in path and setup `fiftlib` (see instructions in the repo). Make sure everything is working by running in terminal `fift -V` and `func -V`.
 
 Last but not least, you will need a decent IDE with FunC and TypeScript support. I recommend [Visual Studio Code](https://code.visualstudio.com/) - it's free and open source. Also install the [FunC Plugin](https://marketplace.visualstudio.com/items?itemName=tonwhales.func-vscode) to add syntax highlighting for the FunC language.
@@ -107,6 +113,7 @@ That's it. We completed our 3 sections and the first version of our contract is 
 
 ## Step 5: Building the counter contract
 
+// TODO
 Right now, the contract is just FunC source code. To get it to run on-chain, we need to convert it to TVM [bytecode](https://ton.org/docs/#/smart-contracts/tvm-instructions/instructions). In TON, we don't usually compile FunC directly to bytecode, we pass through another programming language called [Fift](https://ton-blockchain.github.io/docs/fiftbase.pdf). Just like FunC, Fift is another language that was designed specifically for TON blockchain. It's a low level language that is very close to TVM opcodes. For us regular mortals, Fift is not very useful, so unless you're planning on some extra advanced things, I believe you can safely ignore it for now.
 
 The first step of compilation is using the `func` compiler to generate a Fift file from our FunC file. To do that, we'll rely on the `func` executable installed in step 2 above. Open terminal and run:
@@ -184,6 +191,9 @@ const newContractAddress = contractAddress({ workchain: 0, initialData: initData
 ```
 
 ### Deployment script
+
+// TODO upgrade all libs
+// Use walletv4
 
 The actual deployment involves sending a special message that will deploy our contract. The deployment is going to cost gas and should be done through a wallet. I'm assuming that you have some familiarity with TON wallets and how they're derived from 24 word secret mnemonics. If not, read [this](https://ton.org/docs/#/howto/payment-processing). Let's assume that you already have a TON wallet (holding at least 0.5 TON coin for gas) and that its secret mnemonic is `mad nation chief flavor ...`
 
